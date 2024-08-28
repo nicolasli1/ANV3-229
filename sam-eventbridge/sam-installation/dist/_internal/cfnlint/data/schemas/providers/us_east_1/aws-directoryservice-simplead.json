@@ -1,0 +1,105 @@
+{
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/Size",
+  "/properties/VpcSettings",
+  "/properties/Name",
+  "/properties/Password",
+  "/properties/ShortName",
+  "/properties/Description",
+  "/properties/CreateAlias"
+ ],
+ "definitions": {
+  "VpcSettings": {
+   "$comment": "Contains VPC information",
+   "additionalProperties": false,
+   "properties": {
+    "SubnetIds": {
+     "insertionOrder": false,
+     "items": {
+      "type": "string"
+     },
+     "type": "array",
+     "uniqueItems": true
+    },
+    "VpcId": {
+     "format": "AWS::EC2::VPC.Id",
+     "type": "string"
+    }
+   },
+   "required": [
+    "VpcId",
+    "SubnetIds"
+   ],
+   "type": "object"
+  }
+ },
+ "documentationUrl": "https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-directoryservice-simplead.html",
+ "primaryIdentifier": [
+  "/properties/DirectoryId"
+ ],
+ "properties": {
+  "Alias": {
+   "type": "string"
+  },
+  "CreateAlias": {
+   "type": "boolean"
+  },
+  "Description": {
+   "type": "string"
+  },
+  "DirectoryId": {
+   "type": "string"
+  },
+  "DnsIpAddresses": {
+   "insertionOrder": false,
+   "items": {
+    "type": "string"
+   },
+   "type": "array",
+   "uniqueItems": false
+  },
+  "EnableSso": {
+   "type": "boolean"
+  },
+  "Name": {
+   "type": "string"
+  },
+  "Password": {
+   "type": "string"
+  },
+  "ShortName": {
+   "type": "string"
+  },
+  "Size": {
+   "enum": [
+    "Large",
+    "Small"
+   ],
+   "type": "string"
+  },
+  "VpcSettings": {
+   "$ref": "#/definitions/VpcSettings"
+  }
+ },
+ "readOnlyProperties": [
+  "/properties/Alias",
+  "/properties/DnsIpAddresses",
+  "/properties/DirectoryId"
+ ],
+ "required": [
+  "VpcSettings",
+  "Size",
+  "Name"
+ ],
+ "tagging": {
+  "cloudFormationSystemTags": false,
+  "tagOnCreate": false,
+  "tagUpdatable": false,
+  "taggable": false
+ },
+ "typeName": "AWS::DirectoryService::SimpleAD",
+ "writeOnlyProperties": [
+  "/properties/Password"
+ ]
+}

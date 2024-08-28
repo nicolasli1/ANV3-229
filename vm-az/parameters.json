@@ -1,0 +1,29 @@
+
+
+  {
+    "vmName": {
+      "value": "mi-vm"
+    },
+    "adminUsername": {
+      "value": "mi-usuario"
+    },
+    "publicKey": {
+      "value": "secreto"
+    },
+    "location": {
+      "value": "centralus"
+    },
+    "vmSize": {
+      "value": "Standard_B1s"
+    },
+    "imagePublisher": {
+      "value": "Canonical"
+    },
+    "imageOffer": {
+      "value": "0001-com-ubuntu-server-jammy"
+    },
+    "imageSku": {
+      "value": "22_04-lts-gen2"
+    }
+  }
+  

@@ -1,0 +1,36 @@
+{
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/PolicyName",
+  "/properties/PolicyDocument"
+ ],
+ "primaryIdentifier": [
+  "/properties/Id"
+ ],
+ "properties": {
+  "Arn": {
+   "type": "string"
+  },
+  "Id": {
+   "type": "string"
+  },
+  "PolicyDocument": {
+   "format": "json",
+   "type": [
+    "object",
+    "string"
+   ]
+  },
+  "PolicyName": {
+   "type": "string"
+  }
+ },
+ "readOnlyProperties": [
+  "/properties/Arn",
+  "/properties/Id"
+ ],
+ "required": [
+  "PolicyDocument"
+ ],
+ "typeName": "AWS::IoT::Policy"
+}
