@@ -9,6 +9,7 @@ RUN apt-get update \
         zip \
         npm \
         jq \
+        wget \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -21,6 +22,15 @@ RUN pip install pandas aws-cdk-lib boto3
 
 # Instala AWS CDK usando npm
 RUN npm install -g aws-cdk
+
+# Instala Terraform
+RUN wget https://releases.hashicorp.com/terraform/1.9.5/terraform_1.9.5_linux_amd64.zip \
+    && unzip terraform_1.9.5_linux_amd64.zip \
+    && mv terraform /usr/local/bin/ 
+
+# Instala CLI aws
+RUN pip install awscli --upgrade --user \
+    && export PATH=$PATH:/root/.local/bin
 
 # Establece el directorio de trabajo
 WORKDIR /workspace
