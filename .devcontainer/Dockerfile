@@ -4,12 +4,12 @@ FROM python:3.9-slim
 # Actualiza los repositorios e instala las dependencias necesarias
 RUN apt-get update \
     && apt-get install -y \
-        curl \
-        git \
-        zip \
-        npm \
-        jq \
-        wget \
+    curl \
+    git \
+    zip \
+    npm \
+    jq \
+    wget \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -28,9 +28,11 @@ RUN wget https://releases.hashicorp.com/terraform/1.9.5/terraform_1.9.5_linux_am
     && unzip terraform_1.9.5_linux_amd64.zip \
     && mv terraform /usr/local/bin/ 
 
+# Importacion del path
+ENV PATH="/root/.local/bin:${PATH}"
+
 # Instala CLI aws
-RUN pip install awscli --upgrade --user \
-    && export PATH=$PATH:/root/.local/bin
+RUN pip install awscli --upgrade --user
 
 # Establece el directorio de trabajo
 WORKDIR /workspace
