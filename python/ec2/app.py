@@ -35,7 +35,7 @@ class EC2InstanceStack(Stack):
 
         # AMI
         amzn_linux = ec2.MachineImage.latest_amazon_linux(
-            generation=ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
+           # generation=ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
             edition=ec2.AmazonLinuxEdition.STANDARD,
             virtualization=ec2.AmazonLinuxVirt.HVM,
             storage=ec2.AmazonLinuxStorage.GENERAL_PURPOSE
@@ -49,7 +49,7 @@ class EC2InstanceStack(Stack):
         # Instance
         instance = ec2.Instance(self, "Instance",
             instance_type=ec2.InstanceType("t2.micro"),
-            machine_image=amzn_linux,
+            machine_image=ec2.MachineImage.latest_amazon_linux(),
             vpc = vpc,
             role = role
             )

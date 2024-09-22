@@ -21,6 +21,9 @@
   "VPCpublicSubnet1Subnet325F50B2": {
    "Type": "AWS::EC2::Subnet",
    "Properties": {
+    "VpcId": {
+     "Ref": "VPCB9E5F0B4"
+    },
     "AvailabilityZone": {
      "Fn::Select": [
       0,
@@ -44,10 +47,7 @@
       "Key": "Name",
       "Value": "ec2-instance/VPC/publicSubnet1"
      }
-    ],
-    "VpcId": {
-     "Ref": "VPCB9E5F0B4"
-    }
+    ]
    },
    "Metadata": {
     "aws:cdk:path": "ec2-instance/VPC/publicSubnet1/Subnet"
@@ -56,15 +56,15 @@
   "VPCpublicSubnet1RouteTableF591E248": {
    "Type": "AWS::EC2::RouteTable",
    "Properties": {
+    "VpcId": {
+     "Ref": "VPCB9E5F0B4"
+    },
     "Tags": [
      {
       "Key": "Name",
       "Value": "ec2-instance/VPC/publicSubnet1"
      }
-    ],
-    "VpcId": {
-     "Ref": "VPCB9E5F0B4"
-    }
+    ]
    },
    "Metadata": {
     "aws:cdk:path": "ec2-instance/VPC/publicSubnet1/RouteTable"
@@ -87,12 +87,12 @@
   "VPCpublicSubnet1DefaultRoute19059ECD": {
    "Type": "AWS::EC2::Route",
    "Properties": {
+    "RouteTableId": {
+     "Ref": "VPCpublicSubnet1RouteTableF591E248"
+    },
     "DestinationCidrBlock": "0.0.0.0/0",
     "GatewayId": {
      "Ref": "VPCIGWB7E252D3"
-    },
-    "RouteTableId": {
-     "Ref": "VPCpublicSubnet1RouteTableF591E248"
     }
    },
    "DependsOn": [
@@ -105,6 +105,9 @@
   "VPCpublicSubnet2Subnet2B2DFF71": {
    "Type": "AWS::EC2::Subnet",
    "Properties": {
+    "VpcId": {
+     "Ref": "VPCB9E5F0B4"
+    },
     "AvailabilityZone": {
      "Fn::Select": [
       1,
@@ -128,10 +131,7 @@
       "Key": "Name",
       "Value": "ec2-instance/VPC/publicSubnet2"
      }
-    ],
-    "VpcId": {
-     "Ref": "VPCB9E5F0B4"
-    }
+    ]
    },
    "Metadata": {
     "aws:cdk:path": "ec2-instance/VPC/publicSubnet2/Subnet"
@@ -140,15 +140,15 @@
   "VPCpublicSubnet2RouteTable55DAB1BB": {
    "Type": "AWS::EC2::RouteTable",
    "Properties": {
+    "VpcId": {
+     "Ref": "VPCB9E5F0B4"
+    },
     "Tags": [
      {
       "Key": "Name",
       "Value": "ec2-instance/VPC/publicSubnet2"
      }
-    ],
-    "VpcId": {
-     "Ref": "VPCB9E5F0B4"
-    }
+    ]
    },
    "Metadata": {
     "aws:cdk:path": "ec2-instance/VPC/publicSubnet2/RouteTable"
@@ -171,12 +171,12 @@
   "VPCpublicSubnet2DefaultRoute9ED4D6BC": {
    "Type": "AWS::EC2::Route",
    "Properties": {
+    "RouteTableId": {
+     "Ref": "VPCpublicSubnet2RouteTable55DAB1BB"
+    },
     "DestinationCidrBlock": "0.0.0.0/0",
     "GatewayId": {
      "Ref": "VPCIGWB7E252D3"
-    },
-    "RouteTableId": {
-     "Ref": "VPCpublicSubnet2RouteTable55DAB1BB"
     }
    },
    "DependsOn": [
@@ -203,11 +203,11 @@
   "VPCVPCGW99B986DC": {
    "Type": "AWS::EC2::VPCGatewayAttachment",
    "Properties": {
-    "InternetGatewayId": {
-     "Ref": "VPCIGWB7E252D3"
-    },
     "VpcId": {
      "Ref": "VPCB9E5F0B4"
+    },
+    "InternetGatewayId": {
+     "Ref": "VPCIGWB7E252D3"
     }
    },
    "Metadata": {
@@ -223,7 +223,17 @@
        "Action": "sts:AssumeRole",
        "Effect": "Allow",
        "Principal": {
-        "Service": "ec2.amazonaws.com"
+        "Service": {
+         "Fn::Join": [
+          "",
+          [
+           "ec2.",
+           {
+            "Ref": "AWS::URLSuffix"
+           }
+          ]
+         ]
+        }
        }
       }
      ],
@@ -301,7 +311,7 @@
      "Ref": "InstanceInstanceProfileAB5AEF02"
     },
     "ImageId": {
-     "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
+     "Ref": "SsmParameterValueawsserviceamiamazonlinuxlatestamznamihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
     },
     "InstanceType": "t2.micro",
     "SecurityGroupIds": [
@@ -335,7 +345,7 @@
   "CDKMetadata": {
    "Type": "AWS::CDK::Metadata",
    "Properties": {
-    "Analytics": "v2:deflate64:H4sIAAAAAAAA/11OQW6DQAx8S+7LViTtIceIQ5TbCqpcK+M4ihvwRrteIYT4ewUJpeppxjNjzWxt/vFu8w10McPLPWu4tkOlgHcDXfwaCLd2OD/QFFc5u8K4VDeMVaqFdNJWVvqk9Al1Q6u+aocYPTIoe/kNT+QkSkFIj6DUQf+qeV0HVcBbS6LmJFFBkExFmAJrfww+Peam/8ISHQ1Da4fSPxctuNgu+Cs3NI6mpOhTwNl1EKAlpTC//DEKLxee5o/G9Xrz8raze5vvN9+ROQtJlFuy5RN/AHsQTzlWAQAA"
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/11OQW7CQAx8C/fNtgX1wBHlgLitEsS1cowRLokX7XoVRVH+XiUQgnqa8cxYM2u7+bafK2hjhudbVnNl+1IBbwba+NMTrm1/uqPJL3JyuXGpqhnLVAnpqC2s8EnpCFVNi75ouxg9Mih7eYVHchClIKR7UGqhe9Y8r50q4LUhUXOQqCBIpiRMgbXbB5/uU9N/YY4OhqGxfeEfi2acbRf8hWsaBlNQ9Cng5DoI0JBSmF7ejNzLmcf5g3GdXr18bOzWfm1Xv5E5C0mUG7LFA/8ADj+HOVUBAAA="
    },
    "Metadata": {
     "aws:cdk:path": "ec2-instance/CDKMetadata/Default"
@@ -344,9 +354,9 @@
   }
  },
  "Parameters": {
-  "SsmParameterValueawsserviceamiamazonlinuxlatestamzn2amihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
+  "SsmParameterValueawsserviceamiamazonlinuxlatestamznamihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter": {
    "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
-   "Default": "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
+   "Default": "/aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2"
   },
   "BootstrapVersion": {
    "Type": "AWS::SSM::Parameter::Value<String>",
@@ -396,23 +406,7 @@
         {
          "Ref": "AWS::Region"
         },
-        "ap-northeast-3"
-       ]
-      },
-      {
-       "Fn::Equals": [
-        {
-         "Ref": "AWS::Region"
-        },
         "ap-south-1"
-       ]
-      },
-      {
-       "Fn::Equals": [
-        {
-         "Ref": "AWS::Region"
-        },
-        "ap-south-2"
        ]
       },
       {
@@ -436,35 +430,7 @@
         {
          "Ref": "AWS::Region"
         },
-        "ap-southeast-3"
-       ]
-      }
-     ]
-    },
-    {
-     "Fn::Or": [
-      {
-       "Fn::Equals": [
-        {
-         "Ref": "AWS::Region"
-        },
-        "ap-southeast-4"
-       ]
-      },
-      {
-       "Fn::Equals": [
-        {
-         "Ref": "AWS::Region"
-        },
         "ca-central-1"
-       ]
-      },
-      {
-       "Fn::Equals": [
-        {
-         "Ref": "AWS::Region"
-        },
-        "ca-west-1"
        ]
       },
       {
@@ -482,21 +448,17 @@
         },
         "cn-northwest-1"
        ]
-      },
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
       {
        "Fn::Equals": [
         {
          "Ref": "AWS::Region"
         },
         "eu-central-1"
-       ]
-      },
-      {
-       "Fn::Equals": [
-        {
-         "Ref": "AWS::Region"
-        },
-        "eu-central-2"
        ]
       },
       {
@@ -520,18 +482,6 @@
         {
          "Ref": "AWS::Region"
         },
-        "eu-south-2"
-       ]
-      }
-     ]
-    },
-    {
-     "Fn::Or": [
-      {
-       "Fn::Equals": [
-        {
-         "Ref": "AWS::Region"
-        },
         "eu-west-1"
        ]
       },
@@ -549,22 +499,6 @@
          "Ref": "AWS::Region"
         },
         "eu-west-3"
-       ]
-      },
-      {
-       "Fn::Equals": [
-        {
-         "Ref": "AWS::Region"
-        },
-        "il-central-1"
-       ]
-      },
-      {
-       "Fn::Equals": [
-        {
-         "Ref": "AWS::Region"
-        },
-        "me-central-1"
        ]
       },
       {
@@ -598,7 +532,11 @@
         },
         "us-east-2"
        ]
-      },
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
       {
        "Fn::Equals": [
         {
@@ -606,15 +544,15 @@
         },
         "us-west-1"
        ]
-      }
-     ]
-    },
-    {
-     "Fn::Equals": [
-      {
-       "Ref": "AWS::Region"
       },
-      "us-west-2"
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
      ]
     }
    ]
