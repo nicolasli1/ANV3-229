@@ -7,27 +7,27 @@
         "file": "tree.json"
       }
     },
-    "ec2-instance.assets": {
+    "Mintic-test.assets": {
       "type": "cdk:asset-manifest",
       "properties": {
-        "file": "ec2-instance.assets.json",
+        "file": "Mintic-test.assets.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
       }
     },
-    "ec2-instance": {
+    "Mintic-test": {
       "type": "aws:cloudformation:stack",
       "environment": "aws://unknown-account/unknown-region",
       "properties": {
-        "templateFile": "ec2-instance.template.json",
+        "templateFile": "Mintic-test.template.json",
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/324e51c58318e93c33b4068ac1ca2bdb9a5f44b78f98481ee33d2bfe8808bb4e.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/8c0ed38203e9306bcb0772bd106286842458aeed060cd0b8fb73c250ab36766a.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
-          "ec2-instance.assets"
+          "Mintic-test.assets"
         ],
         "lookupRole": {
           "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
@@ -36,131 +36,53 @@
         }
       },
       "dependencies": [
-        "ec2-instance.assets"
+        "Mintic-test.assets"
       ],
       "metadata": {
-        "/ec2-instance/VPC/Resource": [
+        "/Mintic-test/StaticWebHosting/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "VPCB9E5F0B4"
+            "data": "StaticWebHosting5C0FA483"
           }
         ],
-        "/ec2-instance/VPC/publicSubnet1/Subnet": [
+        "/Mintic-test/StaticWebHosting/Policy/Resource": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "VPCpublicSubnet1Subnet325F50B2"
+            "data": "StaticWebHostingPolicyAA18D483"
           }
         ],
-        "/ec2-instance/VPC/publicSubnet1/RouteTable": [
+        "/Mintic-test/CF-StaticWebDistribution1/CFDistribution": [
           {
             "type": "aws:cdk:logicalId",
-            "data": "VPCpublicSubnet1RouteTableF591E248"
+            "data": "CFStaticWebDistribution1CFDistribution1C2DA86D"
           }
         ],
-        "/ec2-instance/VPC/publicSubnet1/RouteTableAssociation": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "VPCpublicSubnet1RouteTableAssociationBFFA43B7"
-          }
-        ],
-        "/ec2-instance/VPC/publicSubnet1/DefaultRoute": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "VPCpublicSubnet1DefaultRoute19059ECD"
-          }
-        ],
-        "/ec2-instance/VPC/publicSubnet2/Subnet": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "VPCpublicSubnet2Subnet2B2DFF71"
-          }
-        ],
-        "/ec2-instance/VPC/publicSubnet2/RouteTable": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "VPCpublicSubnet2RouteTable55DAB1BB"
-          }
-        ],
-        "/ec2-instance/VPC/publicSubnet2/RouteTableAssociation": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "VPCpublicSubnet2RouteTableAssociation0849466B"
-          }
-        ],
-        "/ec2-instance/VPC/publicSubnet2/DefaultRoute": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "VPCpublicSubnet2DefaultRoute9ED4D6BC"
-          }
-        ],
-        "/ec2-instance/VPC/IGW": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "VPCIGWB7E252D3"
-          }
-        ],
-        "/ec2-instance/VPC/VPCGW": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "VPCVPCGW99B986DC"
-          }
-        ],
-        "/ec2-instance/InstanceSSM/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "InstanceSSMCBFA3CF0"
-          }
-        ],
-        "/ec2-instance/Instance/InstanceSecurityGroup/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "InstanceInstanceSecurityGroupF0E2D5BE"
-          }
-        ],
-        "/ec2-instance/Instance/InstanceProfile": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "InstanceInstanceProfileAB5AEF02"
-          }
-        ],
-        "/ec2-instance/Instance/Resource": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "InstanceC1063A87"
-          }
-        ],
-        "/ec2-instance/SsmParameterValue:--aws--service--ami-amazon-linux-latest--amzn-ami-hvm-x86_64-gp2:C96584B6-F00A-464E-AD19-53AFF4B05118.Parameter": [
-          {
-            "type": "aws:cdk:logicalId",
-            "data": "SsmParameterValueawsserviceamiamazonlinuxlatestamznamihvmx8664gp2C96584B6F00A464EAD1953AFF4B05118Parameter"
-          }
-        ],
-        "/ec2-instance/CDKMetadata/Default": [
+        "/Mintic-test/CDKMetadata/Default": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CDKMetadata"
           }
         ],
-        "/ec2-instance/CDKMetadata/Condition": [
+        "/Mintic-test/CDKMetadata/Condition": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CDKMetadataAvailable"
           }
         ],
-        "/ec2-instance/BootstrapVersion": [
+        "/Mintic-test/BootstrapVersion": [
           {
             "type": "aws:cdk:logicalId",
             "data": "BootstrapVersion"
           }
         ],
-        "/ec2-instance/CheckBootstrapVersion": [
+        "/Mintic-test/CheckBootstrapVersion": [
           {
             "type": "aws:cdk:logicalId",
             "data": "CheckBootstrapVersion"
           }
         ]
       },
-      "displayName": "ec2-instance"
+      "displayName": "Mintic-test"
     }
   }
 }

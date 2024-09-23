@@ -1,0 +1,19 @@
+{
+  "version": "20.0.0",
+  "files": {
+    "8c0ed38203e9306bcb0772bd106286842458aeed060cd0b8fb73c250ab36766a": {
+      "source": {
+        "path": "Mintic-test.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "8c0ed38203e9306bcb0772bd106286842458aeed060cd0b8fb73c250ab36766a.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {}
+}

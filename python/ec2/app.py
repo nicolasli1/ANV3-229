@@ -5,7 +5,7 @@ import json
 from aws_cdk.aws_s3_assets import Asset
 from aws_cdk import Size, Duration, RemovalPolicy
 from aws_cdk import (
-    aws_ec2 as ec2,
+    RemovalPolicy as RemovalPolicy,
     aws_s3 as s3,
     aws_cloudfront as cf,
     aws_cloudfront_origins as origins,
@@ -14,6 +14,7 @@ from aws_cdk import (
     aws_apigateway as api_g,
     aws_iam as iam,
     aws_wafv2 as waf,
+    aws_route53 as r53,
     aws_secretsmanager as secrets,
     App, Stack
 )
@@ -22,39 +23,46 @@ from constructs import Construct
 
 dirname = os.path.dirname(__file__)
 
-class EC2InstanceStack(Stack):
+class StaticSiteStack(Stack):
 
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
-        # VPC
-        vpc = ec2.Vpc(self, "VPC",
-            nat_gateways=0,
-            subnet_configuration=[ec2.SubnetConfiguration(name="public",subnet_type=ec2.SubnetType.PUBLIC)]
-            )
+        BucketStaticSite=s3.Bucket(
+            self,
+            id="StaticWebHosting",
+            public_read_access=True,
+            block_public_access=s3.BlockPublicAccess(
+                block_public_acls=False,
+                ignore_public_acls=False,
+                restrict_public_buckets=False
+                ),
+            encryption=s3.BucketEncryption.S3_MANAGED,
+            versioned=True,
+            removal_policy=RemovalPolicy.DESTROY
+        )
 
-        # AMI
-        amzn_linux = ec2.MachineImage.latest_amazon_linux(
-           # generation=ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
-            edition=ec2.AmazonLinuxEdition.STANDARD,
-            virtualization=ec2.AmazonLinuxVirt.HVM,
-            storage=ec2.AmazonLinuxStorage.GENERAL_PURPOSE
-            )
+        CloudFrontStatic=cf.CloudFrontWebDistribution(
+           self, "CF-StaticWebDistribution1",
+           origin_configs=[cf.SourceConfiguration(
+               s3_origin_source=cf.S3OriginConfig(
+                   s3_bucket_source=BucketStaticSite
+               ),
+               behaviors=[cf.Behavior(is_default_behavior=True)]
+           )
+           ]
+        )
 
-        # Instance Role and SSM Managed Policy
-        role = iam.Role(self, "InstanceSSM", assumed_by=iam.ServicePrincipal("ec2.amazonaws.com"))
+       #Se deja comentariado por tema de costos
+       #  domain=r53.ARecord(
+       #     self,
+       #     "birds.com",
+       #     target=r53.RecordTarget.from_ip_addresses
+       # )
 
-        role.add_managed_policy(iam.ManagedPolicy.from_aws_managed_policy_name("AmazonSSMManagedInstanceCore"))
 
-        # Instance
-        instance = ec2.Instance(self, "Instance",
-            instance_type=ec2.InstanceType("t2.micro"),
-            machine_image=ec2.MachineImage.latest_amazon_linux(),
-            vpc = vpc,
-            role = role
-            )
 
 app = App()
-EC2InstanceStack(app, "ec2-instance")
+StaticSiteStack(app, "Mintic-test")
 
 app.synth()
