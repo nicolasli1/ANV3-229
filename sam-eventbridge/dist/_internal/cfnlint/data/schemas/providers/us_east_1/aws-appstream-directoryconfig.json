@@ -1,0 +1,69 @@
+{
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/DirectoryName"
+ ],
+ "definitions": {
+  "CertificateBasedAuthProperties": {
+   "additionalProperties": false,
+   "properties": {
+    "CertificateAuthorityArn": {
+     "type": "string"
+    },
+    "Status": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ServiceAccountCredentials": {
+   "additionalProperties": false,
+   "properties": {
+    "AccountName": {
+     "type": "string"
+    },
+    "AccountPassword": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "AccountName",
+    "AccountPassword"
+   ],
+   "type": "object"
+  }
+ },
+ "primaryIdentifier": [
+  "/properties/DirectoryName"
+ ],
+ "properties": {
+  "CertificateBasedAuthProperties": {
+   "$ref": "#/definitions/CertificateBasedAuthProperties"
+  },
+  "DirectoryName": {
+   "type": "string"
+  },
+  "OrganizationalUnitDistinguishedNames": {
+   "items": {
+    "type": "string"
+   },
+   "type": "array",
+   "uniqueItems": false
+  },
+  "ServiceAccountCredentials": {
+   "$ref": "#/definitions/ServiceAccountCredentials"
+  }
+ },
+ "required": [
+  "DirectoryName",
+  "OrganizationalUnitDistinguishedNames",
+  "ServiceAccountCredentials"
+ ],
+ "tagging": {
+  "taggable": false
+ },
+ "typeName": "AWS::AppStream::DirectoryConfig",
+ "writeOnlyProperties": [
+  "/properties/ServiceAccountCredentials/AccountPassword"
+ ]
+}

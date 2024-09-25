@@ -1,0 +1,10 @@
+[
+ {
+  "op": "add",
+  "path": "/properties/PermissionModel/enum",
+  "value": [
+   "SELF_MANAGED",
+   "SERVICE_MANAGED"
+  ]
+ }
+]

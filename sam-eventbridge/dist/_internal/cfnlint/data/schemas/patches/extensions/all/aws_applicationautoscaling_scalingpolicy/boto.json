@@ -1,0 +1,43 @@
+[
+ {
+  "op": "add",
+  "path": "/properties/PolicyType/enum",
+  "value": [
+   "StepScaling",
+   "TargetTrackingScaling"
+  ]
+ },
+ {
+  "op": "add",
+  "path": "/definitions/PredefinedMetricSpecification/properties/PredefinedMetricType/enum",
+  "value": [
+   "ALBRequestCountPerTarget",
+   "AppStreamAverageCapacityUtilization",
+   "CassandraReadCapacityUtilization",
+   "CassandraWriteCapacityUtilization",
+   "ComprehendInferenceUtilization",
+   "DynamoDBReadCapacityUtilization",
+   "DynamoDBWriteCapacityUtilization",
+   "EC2SpotFleetRequestAverageCPUUtilization",
+   "EC2SpotFleetRequestAverageNetworkIn",
+   "EC2SpotFleetRequestAverageNetworkOut",
+   "ECSServiceAverageCPUUtilization",
+   "ECSServiceAverageMemoryUtilization",
+   "ElastiCacheDatabaseCapacityUsageCountedForEvictPercentage",
+   "ElastiCacheDatabaseMemoryUsageCountedForEvictPercentage",
+   "ElastiCachePrimaryEngineCPUUtilization",
+   "ElastiCacheReplicaEngineCPUUtilization",
+   "KafkaBrokerStorageUtilization",
+   "LambdaProvisionedConcurrencyUtilization",
+   "NeptuneReaderAverageCPUUtilization",
+   "RDSReaderAverageCPUUtilization",
+   "RDSReaderAverageDatabaseConnections",
+   "SageMakerInferenceComponentConcurrentRequestsPerCopyHighResolution",
+   "SageMakerInferenceComponentInvocationsPerCopy",
+   "SageMakerVariantConcurrentRequestsPerModelHighResolution",
+   "SageMakerVariantInvocationsPerInstance",
+   "SageMakerVariantProvisionedConcurrencyUtilization",
+   "WorkSpacesAverageUserSessionsCapacityUtilization"
+  ]
+ }
+]

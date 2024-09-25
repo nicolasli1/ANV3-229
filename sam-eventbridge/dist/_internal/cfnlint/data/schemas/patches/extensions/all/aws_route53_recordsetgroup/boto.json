@@ -1,0 +1,29 @@
+[
+ {
+  "op": "add",
+  "path": "/definitions/RecordSet/properties/Failover/enum",
+  "value": [
+   "PRIMARY",
+   "SECONDARY"
+  ]
+ },
+ {
+  "op": "add",
+  "path": "/definitions/RecordSet/properties/Type/enum",
+  "value": [
+   "A",
+   "AAAA",
+   "CAA",
+   "CNAME",
+   "DS",
+   "MX",
+   "NAPTR",
+   "NS",
+   "PTR",
+   "SOA",
+   "SPF",
+   "SRV",
+   "TXT"
+  ]
+ }
+]
