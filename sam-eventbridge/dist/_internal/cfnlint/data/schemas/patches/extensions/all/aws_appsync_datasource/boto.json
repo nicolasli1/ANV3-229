@@ -1,0 +1,16 @@
+[
+ {
+  "op": "add",
+  "path": "/properties/Type/enum",
+  "value": [
+   "AMAZON_DYNAMODB",
+   "AMAZON_ELASTICSEARCH",
+   "AMAZON_EVENTBRIDGE",
+   "AMAZON_OPENSEARCH_SERVICE",
+   "AWS_LAMBDA",
+   "HTTP",
+   "NONE",
+   "RELATIONAL_DATABASE"
+  ]
+ }
+]

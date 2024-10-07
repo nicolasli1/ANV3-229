@@ -1,0 +1,10 @@
+[
+ {
+  "op": "add",
+  "path": "/definitions/MinimumHealthyHosts/properties/Type/enum",
+  "value": [
+   "FLEET_PERCENT",
+   "HOST_COUNT"
+  ]
+ }
+]

@@ -1,0 +1,19 @@
+[
+ {
+  "op": "add",
+  "path": "/definitions/SchemaChangePolicy/properties/DeleteBehavior/enum",
+  "value": [
+   "DELETE_FROM_DATABASE",
+   "DEPRECATE_IN_DATABASE",
+   "LOG"
+  ]
+ },
+ {
+  "op": "add",
+  "path": "/definitions/SchemaChangePolicy/properties/UpdateBehavior/enum",
+  "value": [
+   "LOG",
+   "UPDATE_IN_DATABASE"
+  ]
+ }
+]

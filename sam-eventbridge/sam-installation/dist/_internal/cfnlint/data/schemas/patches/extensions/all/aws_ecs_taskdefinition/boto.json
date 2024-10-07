@@ -1,0 +1,19 @@
+[
+ {
+  "op": "add",
+  "path": "/properties/NetworkMode/enum",
+  "value": [
+   "awsvpc",
+   "bridge",
+   "host",
+   "none"
+  ]
+ },
+ {
+  "op": "add",
+  "path": "/definitions/ProxyConfiguration/properties/Type/enum",
+  "value": [
+   "APPMESH"
+  ]
+ }
+]

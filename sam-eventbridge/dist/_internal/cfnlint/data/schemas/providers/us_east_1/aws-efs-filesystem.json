@@ -1,0 +1,211 @@
+{
+ "additionalProperties": false,
+ "createOnlyProperties": [
+  "/properties/AvailabilityZoneName",
+  "/properties/Encrypted",
+  "/properties/KmsKeyId",
+  "/properties/PerformanceMode"
+ ],
+ "definitions": {
+  "Arn": {
+   "type": "string"
+  },
+  "BackupPolicy": {
+   "additionalProperties": false,
+   "properties": {
+    "Status": {
+     "enum": [
+      "DISABLED",
+      "ENABLED"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "Status"
+   ],
+   "type": "object"
+  },
+  "ElasticFileSystemTag": {
+   "additionalProperties": false,
+   "properties": {
+    "Key": {
+     "type": "string"
+    },
+    "Value": {
+     "type": "string"
+    }
+   },
+   "required": [
+    "Value",
+    "Key"
+   ],
+   "type": "object"
+  },
+  "FileSystemProtection": {
+   "additionalProperties": false,
+   "properties": {
+    "ReplicationOverwriteProtection": {
+     "enum": [
+      "DISABLED",
+      "ENABLED"
+     ],
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "LifecyclePolicy": {
+   "additionalProperties": false,
+   "properties": {
+    "TransitionToArchive": {
+     "type": "string"
+    },
+    "TransitionToIA": {
+     "enum": [
+      "AFTER_14_DAYS",
+      "AFTER_180_DAYS",
+      "AFTER_1_DAY",
+      "AFTER_270_DAYS",
+      "AFTER_30_DAYS",
+      "AFTER_365_DAYS",
+      "AFTER_60_DAYS",
+      "AFTER_7_DAYS",
+      "AFTER_90_DAYS"
+     ],
+     "type": "string"
+    },
+    "TransitionToPrimaryStorageClass": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  },
+  "ReplicationConfiguration": {
+   "additionalProperties": false,
+   "properties": {
+    "Destinations": {
+     "items": {
+      "$ref": "#/definitions/ReplicationDestination"
+     },
+     "maxItems": 1,
+     "minItems": 1,
+     "type": "array",
+     "uniqueItems": true
+    }
+   },
+   "type": "object"
+  },
+  "ReplicationDestination": {
+   "additionalProperties": false,
+   "properties": {
+    "AvailabilityZoneName": {
+     "type": "string"
+    },
+    "FileSystemId": {
+     "type": "string"
+    },
+    "KmsKeyId": {
+     "type": "string"
+    },
+    "Region": {
+     "type": "string"
+    }
+   },
+   "type": "object"
+  }
+ },
+ "primaryIdentifier": [
+  "/properties/FileSystemId"
+ ],
+ "properties": {
+  "Arn": {
+   "$ref": "#/definitions/Arn"
+  },
+  "AvailabilityZoneName": {
+   "type": "string"
+  },
+  "BackupPolicy": {
+   "$ref": "#/definitions/BackupPolicy"
+  },
+  "BypassPolicyLockoutSafetyCheck": {
+   "type": "boolean"
+  },
+  "Encrypted": {
+   "type": "boolean"
+  },
+  "FileSystemId": {
+   "type": "string"
+  },
+  "FileSystemPolicy": {
+   "format": "json",
+   "type": [
+    "object",
+    "string"
+   ]
+  },
+  "FileSystemProtection": {
+   "$ref": "#/definitions/FileSystemProtection"
+  },
+  "FileSystemTags": {
+   "items": {
+    "$ref": "#/definitions/ElasticFileSystemTag"
+   },
+   "type": "array",
+   "uniqueItems": true
+  },
+  "KmsKeyId": {
+   "type": "string"
+  },
+  "LifecyclePolicies": {
+   "items": {
+    "$ref": "#/definitions/LifecyclePolicy"
+   },
+   "type": "array",
+   "uniqueItems": true
+  },
+  "PerformanceMode": {
+   "enum": [
+    "generalPurpose",
+    "maxIO"
+   ],
+   "type": "string"
+  },
+  "ProvisionedThroughputInMibps": {
+   "type": "number"
+  },
+  "ReplicationConfiguration": {
+   "$ref": "#/definitions/ReplicationConfiguration"
+  },
+  "ThroughputMode": {
+   "enum": [
+    "bursting",
+    "elastic",
+    "provisioned"
+   ],
+   "type": "string"
+  }
+ },
+ "propertyTransform": {
+  "/properties/FileSystemProtection/ReplicationOverwriteProtection": "$uppercase(FileSystemProtection.ReplicationOverwriteProtection)='DISABLED' ? 'REPLICATING' : $uppercase(FileSystemProtection.ReplicationOverwriteProtection)",
+  "/properties/KmsKeyId": "\"arn:aws[-a-z]*:kms:[a-z0-9-]+:[0-9]{12}:key/[a-zA-Z0-9-]+\""
+ },
+ "readOnlyProperties": [
+  "/properties/Arn",
+  "/properties/FileSystemId"
+ ],
+ "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+ "tagging": {
+  "cloudFormationSystemTags": false,
+  "tagOnCreate": true,
+  "tagProperty": "/properties/FileSystemTags",
+  "tagUpdatable": true,
+  "taggable": true
+ },
+ "typeName": "AWS::EFS::FileSystem",
+ "writeOnlyProperties": [
+  "/properties/BypassPolicyLockoutSafetyCheck",
+  "/properties/ReplicationConfiguration/Destinations/*/AvailabilityZoneName",
+  "/properties/ReplicationConfiguration/Destinations/*/KmsKeyId"
+ ]
+}
