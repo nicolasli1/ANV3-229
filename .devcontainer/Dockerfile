@@ -28,6 +28,12 @@ RUN wget https://releases.hashicorp.com/terraform/1.9.5/terraform_1.9.5_linux_am
     && unzip terraform_1.9.5_linux_amd64.zip \
     && mv terraform /usr/local/bin/ 
 
+
+RUN wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip \
+    && unzip aws-sam-cli-linux-x86_64.zip -d sam-installation \
+    && ./sam-installation/install 
+
+
 # Importacion del path
 ENV PATH="/root/.local/bin:${PATH}"
 
