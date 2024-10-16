@@ -1,5 +1,5 @@
 # Usa una imagen de Python 3.9 Slim como base
-FROM python:3.9-slim
+FROM --platform=linux/amd64 python:3.9-slim
 
 # Actualiza los repositorios e instala las dependencias necesarias
 RUN apt-get update \
