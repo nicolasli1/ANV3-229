@@ -1,6 +1,7 @@
 from os import path
 import os.path
 import json
+import aws_cdk as cdk
 
 from aws_cdk.aws_s3_assets import Asset
 from aws_cdk import Size, Duration, RemovalPolicy
@@ -135,7 +136,7 @@ class WafStack(Stack):
                                 "BO",  ## Bolivia
                                 "BR",  ## Brazil
                                 "CL",  ## Chile
-                                #"CO",  ## Colombia
+                                # "CO",  ## Colombia
                                 "EC",  ## Ecuador
                                 "FK",  ## Falkland Islands
                                 "GF",  ## French Guiana
@@ -149,7 +150,6 @@ class WafStack(Stack):
                                 "NL",
                                 "HK",
                                 "SG",
-
                             ]  ## country_codes
                         )  ## geo_match_statement
                     )  ## statement
@@ -190,8 +190,116 @@ class WafStack(Stack):
         )
 
 
+class EC2AutoScaling(Stack):
+
+    def __init__(self, scope: Construct, id: str, **kwargs) -> None:
+        super().__init__(scope, id, **kwargs)
+
+        # VPC
+        vpc = ec2.Vpc(
+            self,
+            "VPC",
+            nat_gateways=0,
+            subnet_configuration=[
+                ec2.SubnetConfiguration(
+                    name="public", subnet_type=ec2.SubnetType.PUBLIC
+                )
+            ],
+        )
+
+        # AMI
+        amzn_linux = ec2.MachineImage.latest_amazon_linux(
+            generation=ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
+            edition=ec2.AmazonLinuxEdition.STANDARD,
+            virtualization=ec2.AmazonLinuxVirt.HVM,
+            storage=ec2.AmazonLinuxStorage.GENERAL_PURPOSE,
+        )
+
+        # Instance Role and SSM Managed Policy
+        role = iam.Role(
+            self, "InstanceSSM", assumed_by=iam.ServicePrincipal("ec2.amazonaws.com")
+        )
+
+        role.add_managed_policy(
+            iam.ManagedPolicy.from_aws_managed_policy_name(
+                "AmazonSSMManagedInstanceCore"
+            )
+        )
+
+        # Instance
+        instance = ec2.Instance(
+            self,
+            "Instance",
+            instance_type=ec2.InstanceType("t2.micro"),
+            machine_image=amzn_linux,
+            vpc=vpc,
+            role=role,
+        )
+
+
+class ApiDynamo(Stack):
+
+    def __init__(self, scope: Construct, id: str, **kwargs) -> None:
+        super().__init__(scope, id, **kwargs)
+
+        fn_get_items_table = lb.Function(
+            self,
+            id="Fn_get_items_table",
+            handler="lambda_get_items_code.lambda_handler",
+            code=lb.Code.from_asset("../../lambda/Fn_api_dynamo"),
+            timeout=Duration.seconds(60),
+            runtime=lb.Runtime.PYTHON_3_12,
+        )
+
+        fn_post_items_table = lb.Function(
+            self,
+            id="Fn_get_menu_id",
+            handler="lambda_post_items_code.lambda_handler",
+            code=lb.Code.from_asset("../../lambda/Fn_api_dynamo"),
+            timeout=Duration.seconds(60),
+            runtime=lb.Runtime.PYTHON_3_12,
+        )
+
+        global_table = table.TableV2(
+            self,
+            id="GlobalTable",
+            table_name="My_primera_global_table_292",
+            billing=table.Billing.on_demand(),
+            partition_key=table.Attribute(
+                name="id_pk", type=table.AttributeType.STRING
+            ),
+            removal_policy=cdk.RemovalPolicy.DESTROY,
+        )
+
+        global_table.grant_full_access(fn_get_items_table)
+        global_table.grant_full_access(fn_post_items_table)
+
+        api_1 = api_g.RestApi(self, id="Class-229", rest_api_name="Api-Anv3-292")
+
+        items_table = api_1.root.add_resource("items")
+
+        integration_fn_get_items = api_g.LambdaIntegration(fn_get_items_table)
+        integration_fn_post_items = api_g.LambdaIntegration(fn_post_items_table)
+
+        items_table.add_method(
+            "GET",
+            integration_fn_get_items,
+        )
+
+        items_table.add_method(
+            "POST",
+            integration_fn_post_items,
+        )
+        
+        items_table.add_method(
+            "PUT",
+            integration_fn_post_items,
+        )
+
+
 app = App()
 EC2InstanceStack(app, "ec2-instance")
 WafStack(app, "mi-segundo-waf")
-
+EC2AutoScaling(app, "autoscaling")
+ApiDynamo(app, "api-dynamo")
 app.synth()
