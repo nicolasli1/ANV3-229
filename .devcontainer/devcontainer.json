@@ -13,7 +13,8 @@
                 "ms-python.python",
                 "mikoz.black-py",
                 "4ops.terraform",
-                "hashicorp.terraform"
+                "hashicorp.terraform",
+                "ms-azuretools.vscode-bicep"
             ],
             "settings": {
                 "extensions.verifySignature": false,

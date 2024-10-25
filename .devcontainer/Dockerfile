@@ -10,6 +10,9 @@ RUN apt-get update \
     npm \
     jq \
     wget \
+    apt-transport-https \
+    ca-certificates \
+    software-properties-common\
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -33,6 +36,14 @@ RUN wget https://releases.hashicorp.com/terraform/1.9.5/terraform_1.9.5_linux_am
 RUN wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip \
     && unzip aws-sam-cli-linux-x86_64.zip -d sam-installation \
     && ./sam-installation/install 
+
+# Install AZ CLI
+
+RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+    && add-apt-repository "$(curl -sL https://packages.microsoft.com/repos/azure-cli/)" \
+    && apt-get update \
+    && apt-get install -y azure-cli \
+    && az bicep install
 
 
 # Importacion del path
