@@ -281,19 +281,37 @@ class ApiDynamo(Stack):
         integration_fn_get_items = api_g.LambdaIntegration(fn_get_items_table)
         integration_fn_post_items = api_g.LambdaIntegration(fn_post_items_table)
 
-        items_table.add_method(
-            "GET",
-            integration_fn_get_items,
-        )
+        items_table.add_method("GET", integration_fn_get_items)
+        items_table.add_method("POST", integration_fn_post_items)
+        items_table.add_method("PUT", integration_fn_post_items)
 
+        # Agregar el método OPTIONS para CORS
         items_table.add_method(
-            "POST",
-            integration_fn_post_items,
-        )
-        
-        items_table.add_method(
-            "PUT",
-            integration_fn_post_items,
+            "OPTIONS",
+            api_g.MockIntegration(
+                passthrough_behavior=api_g.PassthroughBehavior.NEVER,
+                request_templates={"application/json": '{"statusCode": 200}'},
+                integration_responses=[
+                    api_g.IntegrationResponse(
+                        status_code="200",
+                        response_parameters={
+                            "method.response.header.Access-Control-Allow-Origin": "'*'",
+                            "method.response.header.Access-Control-Allow-Methods": "'GET, POST, PUT, OPTIONS'",
+                            "method.response.header.Access-Control-Allow-Headers": "'Content-Type'",
+                        },
+                    )
+                ],
+            ),
+            method_responses=[
+                api_g.MethodResponse(
+                    status_code="200",
+                    response_parameters={
+                        "method.response.header.Access-Control-Allow-Origin": True,
+                        "method.response.header.Access-Control-Allow-Methods": True,
+                        "method.response.header.Access-Control-Allow-Headers": True,
+                    },
+                )
+            ],
         )
 
 
