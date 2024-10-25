@@ -14,17 +14,32 @@ def lambda_handler(event, context):
             response = table.put_item(Item=body)
             return {
                 'statusCode': 200,
+                'headers': {
+                    'Access-Control-Allow-Headers': 'Content-Type',
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+                },
                 'body': json.dumps({'message': 'Item inserted successfully', 'response': response})
             }
         
         # Si no es POST, devuelve un error
         return {
             'statusCode': 400,
+            'headers': {
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+            },
             'body': json.dumps({'error': 'Unsupported HTTP method, use POST'})
         }
         
     except Exception as e:
         return {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+            },
             'body': json.dumps({'error': str(e)})
         }
