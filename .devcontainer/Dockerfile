@@ -39,11 +39,11 @@ RUN wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli
 
 # Install AZ CLI
 
-RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
-    && add-apt-repository "$(curl -sL https://packages.microsoft.com/repos/azure-cli/)" \
-    && apt-get update \
-    && apt-get install -y azure-cli \
-    && az bicep install
+# RUN curl -sL https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \
+#     && add-apt-repository "$(curl -sL https://packages.microsoft.com/repos/azure-cli/)" \
+#     && apt-get update \
+#     && apt-get install -y azure-cli \
+#     && az bicep install
 
 
 # Importacion del path
